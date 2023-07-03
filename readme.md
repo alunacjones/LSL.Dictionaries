@@ -4,4 +4,12 @@
 
 # LSL.Dictionaries
 
-Provide package documentation here.
+Helpers for dictionaries
+
+## Object Extensions
+
+Convert an object to a dictionary using the `ToDictionary()` object extensions method.
+
+```csharp
+var theDictionary = new MyObject().ToDictionary();
+```
