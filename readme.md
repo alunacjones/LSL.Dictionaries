@@ -11,5 +11,7 @@ Helpers for dictionaries
 Convert an object to a dictionary using the `ToDictionary()` object extensions method.
 
 ```csharp
+using LSL.Dictionaries.Extensions;
+...
 var theDictionary = new MyObject().ToDictionary();
 ```
