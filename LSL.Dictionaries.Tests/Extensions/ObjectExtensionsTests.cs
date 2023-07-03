@@ -35,7 +35,7 @@ namespace LSL.Dictionaries.Tests.Extensions
             var fixture = new Fixture();
             var input = fixture.Create<ComplexClass>();
             input.Child.Age = age;
-            
+
             input.ToDictionary()
                 .Should()
                 .BeEquivalentTo(new Dictionary<string, object>
@@ -48,6 +48,13 @@ namespace LSL.Dictionaries.Tests.Extensions
                 });
         }        
 
+        [Test]
+        public void GiveANullObject_ITShouldReturnNull()
+        {
+            object nullObject = null;
+
+            nullObject.ToDictionary().Should().BeNull();
+        }
         private class TestClass
         {
             public int IntValue { get; set; }
