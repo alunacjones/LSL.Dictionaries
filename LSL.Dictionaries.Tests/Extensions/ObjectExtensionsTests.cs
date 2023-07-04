@@ -49,12 +49,38 @@ namespace LSL.Dictionaries.Tests.Extensions
         }        
 
         [Test]
-        public void GiveANullObject_ITShouldReturnNull()
+        public void GivenANullObject_ItShouldReturnNull()
         {
             object nullObject = null;
 
             nullObject.ToDictionary().Should().BeNull();
         }
+
+        [Test]
+        public void GivenAnObjectWithAnEnumerable_ItShouldJustUseTheEnumerableAndNotItsProperties()
+        {
+            new TestEnumerable
+            {
+                Items = new[] { 1, 2, 3 },
+                ItemsArray = new[] { 1, 2, 3 },
+                ItemsList = new List<int> { 1, 2, 3 }
+            }.ToDictionary()
+            .Should()
+            .BeEquivalentTo(new Dictionary<string, object>
+            {
+                ["Items"] = new[] { 1, 2, 3 },
+                ["ItemsArray"] = new[] { 1, 2, 3 },
+                ["ItemsList"] = new[] { 1, 2, 3 }
+            });
+        }
+
+        private class TestEnumerable
+        {
+            public IEnumerable<int> Items { get; set; } 
+            public int[] ItemsArray { get; set; }
+            public List<int> ItemsList { get; set; }
+        }
+
         private class TestClass
         {
             public int IntValue { get; set; }

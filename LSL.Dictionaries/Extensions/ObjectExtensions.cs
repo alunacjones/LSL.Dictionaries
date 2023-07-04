@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace LSL.Dictionaries.Extensions
@@ -21,7 +22,7 @@ namespace LSL.Dictionaries.Extensions
 
             foreach (var property in source.GetType().GetProperties())
             {
-                if (property.PropertyType.IsClass && !property.PropertyType.IsAssignableFrom(typeof(string)))
+                if (property.PropertyType.IsClass && !property.PropertyType.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                 {
                     result[property.Name] = property.GetValue(source).ToDictionary();
                 }
