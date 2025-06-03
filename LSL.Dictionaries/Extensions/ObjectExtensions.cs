@@ -14,10 +14,7 @@ public static class ObjectExtensions
     /// </summary>
     /// <param name="source">Source object to convert to a dictionary</param>
     /// <returns>The dictionary version of the source object</returns>
-    public static IDictionary<string, object> ToDictionary(this object source)
-    {
-        return source.ToDictionary(null);
-    }
+    public static IDictionary<string, object> ToDictionary(this object source) => source.ToDictionary(null);
 
     /// <summary>
     /// Converts an object to a dictionary
@@ -27,7 +24,6 @@ public static class ObjectExtensions
     /// <returns></returns>
     public static IDictionary<string, object> ToDictionary(this object source, Action<ToDictionaryConfiguration> action)
     {
-        if (source == null) return null;
         action ??= new Action<ToDictionaryConfiguration>(_ => { });
 
         var configuration = new ToDictionaryConfiguration();
@@ -38,18 +34,24 @@ public static class ObjectExtensions
 
     internal static IDictionary<string, object> ToDictionaryInternal(this object source, ToDictionaryConfiguration configuration)
     {
+        if (source == null) return null;
+
         var result = new Dictionary<string, object>();
 
         foreach (var property in source.GetType().GetProperties())
         {
+            var value = property.GetValue(source);
             var name = configuration.PropertyNameProvider(property);
+
+            if (configuration.PropertyFilter(property, value) is false) continue;
+            
             if (configuration.ComplexTypeChecker(property.PropertyType))
             {
-                result[name] = property.GetValue(source).ToDictionaryInternal(configuration);
+                result[name] = value.ToDictionaryInternal(configuration);
             }
             else
             {
-                result[name] = property.GetValue(source);
+                result[name] = value;
             }
         }
 

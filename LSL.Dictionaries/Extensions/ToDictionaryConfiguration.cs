@@ -11,6 +11,7 @@ public sealed class ToDictionaryConfiguration
 {
     internal Func<Type, bool> ComplexTypeChecker { get; private set; } = DefaultComplexTypeChecker;
     internal Func<PropertyInfo, string> PropertyNameProvider { get; private set; } = propertyInfo => propertyInfo.Name;
+    internal Func<PropertyInfo, object, bool> PropertyFilter { get; private set; } = DefaultPropertyFilter;
 
     /// <summary>
     /// Provide a custom property name provider
@@ -38,6 +39,22 @@ public sealed class ToDictionaryConfiguration
         return this;
     }
 
+    /// <summary>
+    /// Use a custom property filter
+    /// </summary>
+    /// <remarks>
+    /// The default filter allows all properties
+    /// </remarks>
+    /// <param name="propertyFilter"></param>
+    /// <returns></returns>
+    public ToDictionaryConfiguration WithPropertyFilter(Func<PropertyInfo, object, bool> propertyFilter)
+    {
+        PropertyFilter = propertyFilter.AssertNotNull(nameof(propertyFilter));
+        return this;
+    }
+
     private static bool DefaultComplexTypeChecker(Type type) =>
         type.IsClass && !type.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(type);
+
+    private static bool DefaultPropertyFilter(PropertyInfo info, object arg2) => true;        
 }

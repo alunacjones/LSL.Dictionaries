@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AutoFixture;
 using FluentAssertions;
@@ -56,7 +57,10 @@ namespace LSL.Dictionaries.Tests.Extensions
             var input = fixture.Create<ComplexClass>();
             input.Child.Age = age;
 
-            input.ToDictionary(c => c.WithComplexTypeChecker(t => t.IsClass).WithPropertyNameProvider(p => p.Name))
+            input.ToDictionary(c => c
+                    .WithComplexTypeChecker(type => type.IsClass && !type.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(type))
+                    .WithPropertyNameProvider(p => p.Name)
+                    .WithPropertyFilter((pi, v) => true))
                 .Should()
                 .BeEquivalentTo(new Dictionary<string, object>
                 {
