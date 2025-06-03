@@ -46,7 +46,53 @@ namespace LSL.Dictionaries.Tests.Extensions
                         ["Age"] = input.Child.Age
                     },
                 });
-        }        
+        }
+
+        [TestCase(null)]
+        [TestCase(12)]
+        public void GivenAnObjectWithComplexTypesAndCustomConfiguration_ItShouldReturnTheExpectedDictionary(int? age)
+        {
+            var fixture = new Fixture();
+            var input = fixture.Create<ComplexClass>();
+            input.Child.Age = age;
+
+            input.ToDictionary(c => c.WithComplexTypeChecker(t => t.IsClass).WithPropertyNameProvider(p => p.Name))
+                .Should()
+                .BeEquivalentTo(new Dictionary<string, object>
+                {
+                    ["Child"] = new Dictionary<string, object>
+                    {
+                        ["Name"] = input.Child.Name,
+                        ["Age"] = input.Child.Age
+                    },
+                });
+        }     
+
+        [Test]
+        public void GivenAnObjectWithInvalidComplexTypeCheckerConfiguration_ItShouldThrowAnException()
+        {
+            var fixture = new Fixture();
+            var input = fixture.Create<ComplexClass>();
+            input.Child.Age = 12;
+
+            new Action(() => input.ToDictionary(c => c.WithComplexTypeChecker(null)))
+                .Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And.ParamName.Should().Be("isAComplexTypeChecker");
+        }                        
+
+        [Test]
+        public void GivenAnObjectWithInvalidPropertyNameProviderConfiguration_ItShouldThrowAnException()
+        {
+            var fixture = new Fixture();
+            var input = fixture.Create<ComplexClass>();
+            input.Child.Age = 12;
+
+            new Action(() => input.ToDictionary(c => c.WithPropertyNameProvider(null)))
+                .Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And.ParamName.Should().Be("propertyNameProvider");
+        }                        
 
         [Test]
         public void GivenANullObject_ItShouldReturnNull()
