@@ -20,14 +20,14 @@ public static class ObjectExtensions
     /// Converts an object to a dictionary
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="action"></param>
+    /// <param name="configurator"></param>
     /// <returns></returns>
-    public static IDictionary<string, object> ToDictionary(this object source, Action<ToDictionaryConfiguration> action)
+    public static IDictionary<string, object> ToDictionary(this object source, Action<ToDictionaryConfiguration> configurator)
     {
-        action ??= new Action<ToDictionaryConfiguration>(_ => { });
+        configurator ??= new Action<ToDictionaryConfiguration>(_ => { });
 
         var configuration = new ToDictionaryConfiguration();
-        action?.Invoke(configuration);
+        configurator?.Invoke(configuration);
 
         return source.ToDictionaryInternal(configuration);
     }
@@ -44,7 +44,7 @@ public static class ObjectExtensions
             var name = configuration.PropertyNameProvider(property);
 
             if (configuration.PropertyFilter(property, value) is false) continue;
-            
+
             if (configuration.ComplexTypeChecker(property.PropertyType))
             {
                 result[name] = value.ToDictionaryInternal(configuration);

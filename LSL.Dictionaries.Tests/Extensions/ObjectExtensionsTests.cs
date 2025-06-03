@@ -41,6 +41,7 @@ namespace LSL.Dictionaries.Tests.Extensions
                 .Should()
                 .BeEquivalentTo(new Dictionary<string, object>
                 {
+                    ["Name"] = input.Name,
                     ["Child"] = new Dictionary<string, object>
                     {
                         ["Name"] = input.Child.Name,
@@ -54,13 +55,16 @@ namespace LSL.Dictionaries.Tests.Extensions
         public void GivenAnObjectWithComplexTypesAndCustomConfiguration_ItShouldReturnTheExpectedDictionary(int? age)
         {
             var fixture = new Fixture();
-            var input = fixture.Create<ComplexClass>();
+            var input = fixture.Create<BaseComplexClass>();
             input.Child.Age = age;
 
-            input.ToDictionary(c => c
-                    .WithComplexTypeChecker(type => type.IsClass && !type.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(type))
-                    .WithPropertyNameProvider(p => p.Name)
-                    .WithPropertyFilter((pi, v) => true))
+            var result = input
+                .ToDictionary(c => c
+                .WithComplexTypeChecker(type => type.IsClass && !type.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(type))
+                .WithPropertyNameProvider(p => p.Name)
+                .WithPropertyFilter((pi, v) => true));
+
+            result
                 .Should()
                 .BeEquivalentTo(new Dictionary<string, object>
                 {
@@ -70,6 +74,9 @@ namespace LSL.Dictionaries.Tests.Extensions
                         ["Age"] = input.Child.Age
                     },
                 });
+
+            result.ToObject<ComplexClass>().Should().BeEquivalentTo(input);
+            result.ToObject<ComplexClass>(c => c.WithPropertyNameProvider(p => p.Name)).Should().BeEquivalentTo(input);
         }     
 
         [Test]
@@ -141,9 +148,14 @@ namespace LSL.Dictionaries.Tests.Extensions
             public byte ByteValue { get; set; }
         }
 
-        private class ComplexClass
+        private class BaseComplexClass
         {
             public ChildClass Child { get; set; }
+        }
+
+        private class ComplexClass : BaseComplexClass
+        {
+            public string Name { get; set; }
         }
 
         private class ChildClass
