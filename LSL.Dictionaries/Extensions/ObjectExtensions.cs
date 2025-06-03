@@ -40,7 +40,7 @@ public static class ObjectExtensions
 
         foreach (var property in source.GetType().GetProperties())
         {
-            var value = property.GetValue(source);
+            var value = configuration.ValueMapper(property, property.GetValue(source));
             var name = configuration.PropertyNameProvider(property);
 
             if (configuration.PropertyFilter(property, value) is false) continue;

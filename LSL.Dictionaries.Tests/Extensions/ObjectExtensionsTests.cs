@@ -65,6 +65,7 @@ public class ObjectExtensionsTests
             .ToDictionary(c => c
             .WithComplexTypeChecker(type => type.IsClass && !type.IsAssignableFrom(typeof(string)) && !typeof(IEnumerable).IsAssignableFrom(type))
             .WithPropertyNameProvider(p => p.Name)
+            .WithValueMapper((pi, v) => v)
             .WithPropertyFilter((pi, v) => true));
 
         result
@@ -82,9 +83,9 @@ public class ObjectExtensionsTests
 
         result = JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(result));
 
-        var otherResult = result.ToObject<ComplexClass>(c => c
-            .WithValueMapper(ValueMapper)
+        var otherResult = result.ToObject<ComplexClass>(c => c            
             .WithPropertyNameProvider(p => p.Name)
+            .WithValueMapper(ValueMapper)
         );
 
         otherResult.Should().BeEquivalentTo(input);
@@ -119,7 +120,7 @@ public class ObjectExtensionsTests
             .Should().ThrowExactly<SetPropertyValueException>()
             .WithMessage(
                 """
-                Unable to write value '12-May-2020' of type 'String' to property 'MyDate' of the target type of 'BadClass'd.
+                Unable to write value '12-May-2020' of type 'String' to property 'MyDate' of the target type of 'BadClass'.
 
                 Inner exception message: Object of type 'System.String' cannot be converted to type 'System.DateTime'.
                 """.ReplaceLineEndings());

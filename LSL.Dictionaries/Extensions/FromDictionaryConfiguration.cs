@@ -8,6 +8,8 @@ namespace LSL.Dictionaries.Extensions;
 /// </summary>
 public class FromDictionaryConfiguration : BaseConfiguration<FromDictionaryConfiguration>
 {
+    internal FromDictionaryConfiguration() => SetSelf(this);
+
     internal Func<PropertyInfo, object, object> ValueMapper { get; private set; } = DefaultValueMapper;
 
     /// <summary>

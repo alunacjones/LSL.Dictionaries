@@ -10,6 +10,8 @@ namespace LSL.Dictionaries.Extensions;
 public abstract class BaseConfiguration<TSelf>
     where TSelf : BaseConfiguration<TSelf>
 {
+    private TSelf _self;
+
     internal Func<PropertyInfo, object, bool> PropertyFilter { get; private set; } = DefaultPropertyFilter;
     internal Func<PropertyInfo, string> PropertyNameProvider { get; private set; } = propertyInfo => propertyInfo.Name;
 
@@ -24,7 +26,7 @@ public abstract class BaseConfiguration<TSelf>
     public BaseConfiguration<TSelf> WithPropertyFilter(Func<PropertyInfo, object, bool> propertyFilter)
     {
         PropertyFilter = propertyFilter.AssertNotNull(nameof(propertyFilter));
-        return this;
+        return _self;
     }
 
     /// <summary>
@@ -32,11 +34,13 @@ public abstract class BaseConfiguration<TSelf>
     /// </summary>
     /// <param name="propertyNameProvider"></param>
     /// <returns></returns>
-    public BaseConfiguration<TSelf> WithPropertyNameProvider(Func<PropertyInfo, string> propertyNameProvider)
+    public TSelf WithPropertyNameProvider(Func<PropertyInfo, string> propertyNameProvider)
     {
         PropertyNameProvider = propertyNameProvider.AssertNotNull(nameof(propertyNameProvider));
-        return this;
+        return _self;
     }
 
+    internal void SetSelf(TSelf self) => _self = self;
+    
     private static bool DefaultPropertyFilter(PropertyInfo info, object arg2) => true;
 }

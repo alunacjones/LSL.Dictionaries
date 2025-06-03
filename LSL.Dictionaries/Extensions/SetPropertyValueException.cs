@@ -37,7 +37,7 @@ public class SetPropertyValueException(
 
     private static string CreateMessage(PropertyInfo propertyInfo, object target, object value, Exception innerException) =>
         $"""
-        Unable to write value '{value}' of type '{value.GetType().Name}' to property '{propertyInfo.Name}' of the target type of '{target.GetType().Name}'d.
+        Unable to write value '{value}' of type '{value.GetType().Name}' to property '{propertyInfo.Name}' of the target type of '{target.GetType().Name}'.
 
         Inner exception message: {innerException.Message}
         """;
