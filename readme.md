@@ -6,12 +6,18 @@
 
 Helpers for dictionaries
 
-The following quick start examples assume the following class definition has been defined:
+The following quick start examples assume the following class definitions has been defined:
 
 ```csharp
 public class MyObject
 {
     public int AValue { get; set; }
+    public Inner Inner { get; set; } = new Inner();
+}
+
+public class Inner
+{
+    public string Name { get; set; }
 }
 ```
 ## Object Extensions
@@ -27,6 +33,10 @@ var theDictionary = new MyObject().ToDictionary();
     theDictionary will contain:
 
     ["AValue"] = 0
+    ["Inner"] = new Dictionary<string, object>
+    {
+        ["Name"] = null
+    }
 */
 ```
 
@@ -40,11 +50,21 @@ using LSL.Dictionaries.Extensions;
 
 var theObject = new Dictionary<string, object>
 {
-    ["AValue"] = 12
+    ["AValue"] = 12,
+    ["Inner"] = new Dictionary<string, object>
+    {
+        ["Name"] = "Als"
+    }
 }.ToObject<MyObject>();
 
 /*
-    theObject will have AValue set to 12
+    theObject will be:
+    {
+        AValue = 12,
+        Inner = {
+            Name = "Als"
+        }
+    }
 */
 ```
 <!-- HIDE -->
