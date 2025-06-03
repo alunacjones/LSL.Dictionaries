@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using AutoFixture;
 using FluentAssertions;
 using LSL.Dictionaries.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace LSL.Dictionaries.Tests.Extensions
@@ -76,7 +79,32 @@ namespace LSL.Dictionaries.Tests.Extensions
                 });
 
             result.ToObject<ComplexClass>().Should().BeEquivalentTo(input);
-            result.ToObject<ComplexClass>(c => c.WithPropertyNameProvider(p => p.Name)).Should().BeEquivalentTo(input);
+
+            result = JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(result));
+
+            var otherResult = result.ToObject<ComplexClass>(c => c
+                .WithValueMapper(ValueMapper)
+                .WithPropertyNameProvider(p => p.Name)
+            );
+            
+            otherResult.Should().BeEquivalentTo(input);
+
+            static object ValueMapper(PropertyInfo pi, object value)
+            {
+                var result = value switch
+                {
+                    JObject jObject => jObject.ToObject<IDictionary<string, object>>(),
+                    //long aLong => pi.PropertyType.IsAssignableFrom(typeof(long)) ? aLong : Convert.ToInt32(aLong),
+                    _ => value
+                };
+
+                if (!pi.PropertyType.IsAssignableFrom(typeof(long)) && value is long aLong)
+                {
+                    return Convert.ToInt32(aLong);
+                }
+
+                return result;
+            }
         }     
 
         [Test]

@@ -42,7 +42,7 @@ public static class DictionaryExtensions
         foreach (var property in type.GetProperties())
         {
             var name = configuration.PropertyNameProvider(property);
-            var value = source.TryGetValue(name, out var foundValue) ? foundValue : null;
+            var value = configuration.ValueMapper(property, source.TryGetValue(name, out var foundValue) ? foundValue : null);
 
             if (configuration.PropertyFilter(property, value) is false) continue;
 
