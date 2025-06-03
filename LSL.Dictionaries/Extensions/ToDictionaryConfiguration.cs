@@ -28,7 +28,6 @@ public sealed class ToDictionaryConfiguration : BaseConfiguration<ToDictionaryCo
         return this;
     }
 
-
     /// <summary>
     /// Use a custom value mapper
     /// </summary>

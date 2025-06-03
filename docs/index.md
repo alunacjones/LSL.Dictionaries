@@ -6,6 +6,14 @@
 
 Helpers for dictionaries
 
+The following quick start examples assume the following class definition has been defined:
+
+```csharp
+public class MyObject
+{
+    public int AValue { get; set; }
+}
+```
 ## Object Extensions
 
 Convert an object to a dictionary using the `ToDictionary()` object extensions method.
@@ -14,4 +22,28 @@ Convert an object to a dictionary using the `ToDictionary()` object extensions m
 using LSL.Dictionaries.Extensions;
 ...
 var theDictionary = new MyObject().ToDictionary();
+
+/*
+    theDictionary will contain:
+
+    ["AValue"] = 0
+*/
+```
+
+## Dictionary Extensions
+
+Convert an `IDictionary<string, object>` to an object:
+
+```csharp
+using LSL.Dictionaries.Extensions;
+...
+
+var theObject = new Dictionary<string, object>
+{
+    ["AValue"] = 12
+}.ToObject<MyObject>();
+
+/*
+    theObject will have AValue set to 12
+*/
 ```
