@@ -15,10 +15,3 @@ using LSL.Dictionaries.Extensions;
 ...
 var theDictionary = new MyObject().ToDictionary();
 ```
-<!-- HIDE -->
-
-## Further Documentation
-
-More in-depth documentation can be found [here](https://alunacjones.github.io/LSL.Dictionaries/)
-
-<!-- END:HIDE -->
