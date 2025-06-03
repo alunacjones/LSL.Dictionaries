@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LSL.Dictionaries.Extensions;
 
@@ -48,14 +49,29 @@ public static class DictionaryExtensions
 
             if (value is IDictionary<string, object> dictionary)
             {
-                property.SetValue(result, dictionary.ToObjectInternal(property.PropertyType, configuration));
+                property.SafeSetValue(result, dictionary.ToObjectInternal(property.PropertyType, configuration));
             }
             else
             {
-                property.SetValue(result, value);
+                property.SafeSetValue(result, value);
             }
         }
 
         return result;
-    } 
+    }
+}
+
+internal static class PropertyInfoExtensions
+{
+    public static void SafeSetValue(this PropertyInfo source, object target, object value)
+    {
+        try
+        {
+            source.SetValue(target, value);
+        }
+        catch (Exception exception)
+        {
+            throw new SetPropertyValueException(source, target, value, exception);
+        }
+    }
 }
