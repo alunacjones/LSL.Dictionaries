@@ -33,14 +33,19 @@ public static class ObjectExtensions
         var configuration = new ToDictionaryConfiguration();
         action?.Invoke(configuration);
 
+        return source.ToDictionaryInternal(configuration);
+    }
+
+    internal static IDictionary<string, object> ToDictionaryInternal(this object source, ToDictionaryConfiguration configuration)
+    {
         var result = new Dictionary<string, object>();
 
         foreach (var property in source.GetType().GetProperties())
         {
-            var name = configuration.PropertyNameProvider(property); 
+            var name = configuration.PropertyNameProvider(property);
             if (configuration.ComplexTypeChecker(property.PropertyType))
             {
-                result[name] = property.GetValue(source).ToDictionary();
+                result[name] = property.GetValue(source).ToDictionaryInternal(configuration);
             }
             else
             {
