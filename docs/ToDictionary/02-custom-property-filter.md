@@ -8,7 +8,7 @@ Sometimes it is desirable to omit certain properties and these can be filtered a
 
     The `value` parameter is the value of the property.
 
-```csharp { data-fiddle="6lJ5Xv" }
+```csharp { data-fiddle="Yk2nOY" }
 var dictionary = new MyObject()
     .ToDictionary(c => c.
         WithPropertyFilter((propertyInfo, value) => 
