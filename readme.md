@@ -20,6 +20,15 @@ public class Inner
     public string Name { get; set; }
 }
 ```
+
+<!-- HIDE -->
+
+## Further Documentation
+
+More in-depth documentation can be found [here](https://alunacjones.github.io/LSL.Dictionaries/)
+
+<!-- END:HIDE -->
+
 ## Object Extensions
 
 Convert an object to a dictionary using the `ToDictionary()` object extensions method.
@@ -67,10 +76,3 @@ var theObject = new Dictionary<string, object>
     }
 */
 ```
-<!-- HIDE -->
-
-## Further Documentation
-
-More in-depth documentation can be found [here](https://alunacjones.github.io/LSL.Dictionaries/)
-
-<!-- END:HIDE -->
