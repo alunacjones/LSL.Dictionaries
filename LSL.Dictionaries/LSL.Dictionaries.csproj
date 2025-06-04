@@ -28,7 +28,12 @@
   </PropertyGroup>
 
   <Target Name="CopyReadmeAndValidate" BeforeTargets="Build">
+    <PropertyGroup>
+      <ReadmeContent>$([System.IO.File]::ReadAllText('../readme.md').TrimEnd())</ReadmeContent>  
+    </PropertyGroup>
+
     <Exec Command="powershell build/CopyReadmeToIndex.ps1" WorkingDirectory=".." />
+
     <PropertyGroup>
       <HasNoTags>false</HasNoTags>
       <HasNoDescription>false</HasNoDescription>
