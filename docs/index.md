@@ -44,7 +44,7 @@ var theDictionary = new MyObject().ToDictionary();
 
 Convert an `IDictionary<string, object>` to an object:
 
-```csharp { data-fiddle="jQIAC7" }
+```csharp { data-fiddle="jQIAC7" } 
 using LSL.Dictionaries.Extensions;
 ...
 
