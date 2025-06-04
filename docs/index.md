@@ -6,7 +6,7 @@
 
 Helpers for dictionaries
 
-The following quick start examples assume the following class definitions has been defined:
+The following quick start examples assume the following class definitions have been defined:
 
 ```csharp
 public class MyObject
@@ -24,7 +24,7 @@ public class Inner
 
 Convert an object to a dictionary using the `ToDictionary()` object extensions method.
 
-```csharp
+```csharp { data-fiddle="JWV0iK" }
 using LSL.Dictionaries.Extensions;
 ...
 var theDictionary = new MyObject().ToDictionary();
@@ -44,7 +44,7 @@ var theDictionary = new MyObject().ToDictionary();
 
 Convert an `IDictionary<string, object>` to an object:
 
-```csharp
+```csharp { data-fiddle="jQIAC7" }
 using LSL.Dictionaries.Extensions;
 ...
 
@@ -67,3 +67,4 @@ var theObject = new Dictionary<string, object>
     }
 */
 ```
+
