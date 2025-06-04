@@ -39,4 +39,5 @@ deploy:
   api_key: $(MY_NUGET_API_KEY)
 skip_commits:
   files:
-    - '**/*.md'     
+    - '**/*.md'
+    - 'docs/**'
