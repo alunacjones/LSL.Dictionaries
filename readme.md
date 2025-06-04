@@ -4,7 +4,17 @@
 
 # LSL.Dictionaries
 
-Helpers for dictionaries
+Helpers for dictionaries. Currently supports mapping an object to a dictionary and a dictionary into an object.
+
+<!-- HIDE -->
+
+## Further Documentation
+
+More in-depth documentation can be found [here](https://alunacjones.github.io/LSL.Dictionaries/)
+
+<!-- END:HIDE -->
+
+## Assumed class definitions
 
 The following quick start examples assume the following class definitions have been defined:
 
@@ -20,14 +30,6 @@ public class Inner
     public string Name { get; set; }
 }
 ```
-
-<!-- HIDE -->
-
-## Further Documentation
-
-More in-depth documentation can be found [here](https://alunacjones.github.io/LSL.Dictionaries/)
-
-<!-- END:HIDE -->
 
 ## Object Extensions
 
