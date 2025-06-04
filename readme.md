@@ -24,7 +24,7 @@ public class Inner
 
 Convert an object to a dictionary using the `ToDictionary()` object extensions method.
 
-<!-- REPLACE ```csharp { data-fiddle="JWV0iK" } -->```csharp<!-- END:REPLACE -->
+```csharp { data-fiddle="JWV0iK" }
 using LSL.Dictionaries.Extensions;
 ...
 var theDictionary = new MyObject().ToDictionary();
@@ -44,7 +44,7 @@ var theDictionary = new MyObject().ToDictionary();
 
 Convert an `IDictionary<string, object>` to an object:
 
-<!-- REPLACE ```csharp { data-fiddle="jQIAC7" } -->```csharp<!-- END:REPLACE -->
+```<!-- REPLACE csharp { data-fiddle="jQIAC7" } -->csharp<!-- END:REPLACE -->
 using LSL.Dictionaries.Extensions;
 ...
 
