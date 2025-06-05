@@ -12,11 +12,14 @@ The following code would will just use the default configuration when converting
 dictionary.
 
 ```csharp { data-fiddle="zNzuYm" }
-var theObject = new Dictionary<string, object>()
-    .ToObject();
+var dictionary = new MyObject()
+{
+    AValue = 12
+}
+.ToDictionary();
 
 // This will result in a dictionary containing:
-// ["AValue"] = 0
+// ["AValue"] = 12
 ```
 
 [Property Filter]: ./02-custom-property-filter.md
