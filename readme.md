@@ -38,15 +38,23 @@ Convert an object to a dictionary using the `ToDictionary()` object extensions m
 ```csharp { data-fiddle="JWV0iK" }
 using LSL.Dictionaries.Extensions;
 ...
-var theDictionary = new MyObject().ToDictionary();
+var theDictionary = new MyObject()
+    {
+        AValue = 12,
+        Inner = new Inner
+        {
+            Name = "Als"
+        }
+    }
+    .ToDictionary();
 
 /*
     theDictionary will contain:
 
-    ["AValue"] = 0
+    ["AValue"] = 12
     ["Inner"] = new Dictionary<string, object>
     {
-        ["Name"] = null
+        ["Name"] = "Als"
     }
 */
 ```
