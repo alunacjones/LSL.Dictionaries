@@ -23,6 +23,6 @@ var dictionary = new MyObject()
 // ["AValue"] = 12
 ```
 
-[PropertyFilter]: ./02-custom-property-filter.md
+[Property Filter]: ./02-custom-property-filter.md
 [Value Mapping]: ./03-custom-value-mapping.md
 [Property Name Provider]: ./04-custom-property-name.md
