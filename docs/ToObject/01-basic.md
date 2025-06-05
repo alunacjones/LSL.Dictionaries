@@ -2,10 +2,10 @@
 
 When no configuration is provided the defaults are as follows:
 
-| Option                                                 | Behaviour                                                                              |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| [Property Filter]                                      | All `public` properties are set on the object if found in the dictionary               |
-| [Value Mapping]                                        | The value from the dictionary sets the property on the object with no transformation   |
+| Option                   | Behaviour                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------- |
+| [Property Filter]        | All `public` properties are output to the dictionary                                   |
+| [Value Mapping]          | The value from the object sets the dictionary value with no transformation             |
 | [Property Name Provider] | The default property name provider sets the dictionary key to the name of the property |
 
 The following code would will just use the default configuration when converting an object to a
