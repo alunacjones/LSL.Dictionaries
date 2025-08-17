@@ -38,7 +38,7 @@ public static class DictionaryExtensions
     {
         source.AssertNotNull(nameof(source));
 
-        var result = Activator.CreateInstance(type);
+        var result = configuration.InstanceFactory(type);
 
         foreach (var property in type.GetProperties())
         {

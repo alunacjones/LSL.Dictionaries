@@ -83,9 +83,10 @@ public class ObjectExtensionsTests
 
         result = JsonConvert.DeserializeObject<IDictionary<string, object>>(JsonConvert.SerializeObject(result));
 
-        var otherResult = result.ToObject<ComplexClass>(c => c            
-            .WithPropertyNameProvider(p => p.Name)
+        var otherResult = result.ToObject<ComplexClass>(c => c
             .WithValueMapper(ValueMapper)
+            .WithInstanceFactory(Activator.CreateInstance)
+            .WithPropertyNameProvider(p => p.Name)            
         );
 
         otherResult.Should().BeEquivalentTo(input);

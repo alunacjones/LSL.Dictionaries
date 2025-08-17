@@ -23,7 +23,7 @@ public abstract class BaseConfiguration<TSelf>
     /// </remarks>
     /// <param name="propertyFilter"></param>
     /// <returns></returns>
-    public BaseConfiguration<TSelf> WithPropertyFilter(Func<PropertyInfo, object, bool> propertyFilter)
+    public TSelf WithPropertyFilter(Func<PropertyInfo, object, bool> propertyFilter)
     {
         PropertyFilter = propertyFilter.AssertNotNull(nameof(propertyFilter));
         return _self;
